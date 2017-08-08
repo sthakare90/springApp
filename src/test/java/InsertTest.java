@@ -8,19 +8,20 @@ import org.springframework.core.io.Resource;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.skcs.dao.UserDao;
 import com.skcs.entity.UserDetails;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContext-test.xml"})
-@TransactionConfiguration(transactionManager = "transactionManager")
-@Transactional
+@EnableTransactionManagement
+/*@TransactionConfiguration(transactionManager = "transactionManager")*/
+//@Transactional(readOnly = false)
 public class InsertTest {
 	@Autowired
     UserDao dao;
+	
 	@Test
 	public void testInsert() {  
 	      
@@ -33,9 +34,11 @@ public class InsertTest {
 	    dao.setTemplate(template);
 	      
 	    UserDetails e=new UserDetails();  
-	    e.setUserId("123");  
+	    e.setUserId("fdgdgd");  
 	    e.setFirstName("varun");  
 	    e.setLastName("ABC");  
+	    e.setAddress1("gfghfdh");
+	    e.setAddress2("gfghfdh");
 	      
 	    dao.saveEmployee(e);  
 	      
