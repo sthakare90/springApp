@@ -1,13 +1,16 @@
-package com.dao;
+package com.skcs.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.stereotype.Repository;
 
-import com.entity.UserDetails;
+import com.skcs.dao.UserDao;
+import com.skcs.entity.UserDetails;
 
-public class UserDao {
+@Repository
+public class UserDaoImpl implements UserDao{
 	
 	HibernateTemplate template;  
 	public void setTemplate(HibernateTemplate template) {  
