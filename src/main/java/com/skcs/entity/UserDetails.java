@@ -4,14 +4,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
-@Table(name="USERDETAILS")
+@Table(name="USERDETAILS", schema="SKCS_ADMIN")
 public class UserDetails {
+	
+	/*@Transient
+	private static final long serialVersionUID = 1L;*/
 
 	@Id
 	@Column(name = "USERID")	
-	private String userId;
+	private int userId;
 
 	@Column(name = "FIRSTNAME")
 	private String firstName;
@@ -25,11 +29,11 @@ public class UserDetails {
 	@Column(name = "ADDRESS2")
 	private String address2;
 
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 

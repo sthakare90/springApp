@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.skcs.dao.UserDao;
 import com.skcs.entity.UserDetails;
@@ -17,9 +18,13 @@ public class UserDaoImpl implements UserDao{
 	    this.template = template;  
 	}  
 	
-	//method to save employee  
+	//method to save employee
+	@Transactional(readOnly=false)
 	public void saveEmployee(UserDetails u){  
+		System.out.println("Neme: "+u.getFirstName());
+		
 	    template.save(u);  
+	    template.getSessionFactory().getCurrentSession().getTransaction().commit();
 	}
 	
 	//method to update employee  
