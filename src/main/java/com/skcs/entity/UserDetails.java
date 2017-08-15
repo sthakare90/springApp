@@ -69,5 +69,8 @@ public class UserDetails {
 		this.address2 = address2;
 	}
 	
-	
+	public String toString()
+	{
+		return firstName+" "+lastName;
+	}
 }

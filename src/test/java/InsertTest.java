@@ -1,67 +1,78 @@
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.skcs.dao.UserDao;
 import com.skcs.entity.UserDetails;
+import com.skcs.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContext-test.xml"})
 @EnableTransactionManagement
-/*@TransactionConfiguration(transactionManager = "transactionManager")
-@Transactional(readOnly = false)*/
+@Transactional(readOnly = false)
 public class InsertTest {
+
 	@Autowired
-	UserDao dao;
+	SessionFactory sessionFactory;
+	@Autowired
+	UserService userService;
+
+	//@Test
+	public void testInsertUser() {  
+		Session session = sessionFactory.getCurrentSession();
+		userService.setSession(session);
+		UserDetails u=new UserDetails();  
+		u.setUserId(11);  
+		u.setFirstName("tip132");  
+		u.setLastName("ABC");  
+		u.setAddress1("gfghfdh");
+		u.setAddress2("gfghfdh");
+		userService.saveUser(u);
+	}  
+
+	//@Test
+	public void testUpdateUser() {  
+		Session session = sessionFactory.getCurrentSession();
+		userService.setSession(session);
+		UserDetails u=new UserDetails();  
+		u.setUserId(11);  
+		u.setFirstName("ABC145");  
+		u.setLastName("ABC");  
+		u.setAddress2("gfghfdh");
+		userService.updateUser(u);
+	}  
+
+	//@Test
+	public void testDeleteUser() {  
+		Session session = sessionFactory.getCurrentSession();
+		userService.setSession(session);
+		UserDetails u=new UserDetails();  
+		u.setUserId(11);  
+		userService.deleteUser(u);
+	}
+
+	//@Test
+	public void testGetUserById() {  
+		Session session = sessionFactory.getCurrentSession();
+		userService.setSession(session);
+		UserDetails u = userService.getUserById(10);
+		System.out.println(u);
+	}
 
 	@Test
-	@Transactional(readOnly=false)
-	public void testInsert() {  
-
-		Resource r=new ClassPathResource("applicationContext-test.xml"); 
-		//Resource r = new FileSystemResource("C:\\Users\\Acer\\Desktop\\Proj\\SpringMVC\\src\\applicationContext.xml");
-		BeanFactory factory=new XmlBeanFactory(r);  
-		HibernateTemplate template=(HibernateTemplate)factory.getBean("template");
-		SessionFactory sessionFactory=(SessionFactory)factory.getBean("mysessionFactory");
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.getTransaction();
-		try{
-
-			dao.setTemplate(template);
-			tx.begin();
-			UserDetails e=new UserDetails();  
-			e.setUserId(5);  
-			e.setFirstName("riya");  
-			e.setLastName("ABC");  
-			e.setAddress1("gfghfdh");
-			e.setAddress2("gfghfdh");
-
-			//dao.saveEmployee(e);
-
-			session.saveOrUpdate(e);
-			tx.commit();
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		finally {
-			session.close();
-		}
-
-		System.out.println(dao.getById(4).getFirstName());
-
-	}  
+	public void testGetAllUsers() {  
+		Session session = sessionFactory.getCurrentSession();
+		userService.setSession(session);
+		List<UserDetails> list = userService.getAllUsers(session);
+		for(UserDetails u: list)
+			System.out.println(u);
+	}
 
 }

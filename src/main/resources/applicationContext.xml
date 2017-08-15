@@ -58,7 +58,5 @@
 	</bean>
 
 
-	<!-- <bean id="d" class="com.dao.UserDao"> <property name="template" ref="template"></property> 
-		</bean> -->
 
 </beans>
